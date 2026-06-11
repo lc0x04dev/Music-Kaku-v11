@@ -1,0 +1,6 @@
+{
+  "name": "NeonBeat",
+  "description": "Un reproductor de música moderno con diseño oscuro profundo, acentos neón, letras de canciones y mini reproductor persistente.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
