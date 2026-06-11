@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.FeaturedPlayList
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -45,6 +46,7 @@ import com.example.ui.screens.HomeScreen
 import com.example.ui.screens.PlayerScreen
 import com.example.ui.screens.PlaylistsScreen
 import com.example.ui.screens.SearchScreen
+import com.example.ui.screens.FavoritesScreen
 import com.example.ui.theme.MyApplicationTheme
 import com.example.ui.theme.NeonCyan
 import com.example.ui.theme.NeonMagenta
@@ -68,6 +70,7 @@ sealed class Screen(val route: String, val title: String, val icon: androidx.com
     object Player : Screen("player", "Canción", Icons.Default.MusicNote)
     object Playlist : Screen("playlists", "Lista", Icons.Default.FeaturedPlayList)
     object Search : Screen("search", "Búsqueda", Icons.Default.Search)
+    object Favorite : Screen("favorites", "Favorito", Icons.Default.Favorite)
 }
 
 @Composable
@@ -83,7 +86,8 @@ fun MusicPlayerApp() {
         Screen.Home,
         Screen.Player,
         Screen.Playlist,
-        Screen.Search
+        Screen.Search,
+        Screen.Favorite
     )
 
     Scaffold(
@@ -167,6 +171,12 @@ fun MusicPlayerApp() {
                 }
                 composable(Screen.Search.route) {
                     SearchScreen(
+                        viewModel = musicViewModel,
+                        onNavigateToPlayer = { navController.navigate(Screen.Player.route) }
+                    )
+                }
+                composable(Screen.Favorite.route) {
+                    FavoritesScreen(
                         viewModel = musicViewModel,
                         onNavigateToPlayer = { navController.navigate(Screen.Player.route) }
                     )
