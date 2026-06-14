@@ -119,3 +119,27 @@ dependencies {
   "ksp"(libs.androidx.room.compiler)
   "ksp"(libs.moshi.kotlin.codegen)
 }
+
+tasks.register("copyApk") {
+    dependsOn("assembleDebug")
+    doLast {
+        val srcFile = file("build/outputs/apk/debug/app-debug.apk")
+        if (srcFile.exists()) {
+            println("INFO: Source APK exists. Size: ${srcFile.length()} bytes.")
+            val destDir = file("../build-outputs")
+            destDir.mkdirs()
+            val destFile = file("../build-outputs/app-debug.apk")
+            
+            // Delete old destination file if it exists to be safe
+            if (destFile.exists()) destFile.delete()
+            
+            srcFile.copyTo(destFile, overwrite = true)
+            
+            println("INFO: Copied APK Size: ${destFile.length()} bytes.")
+            println("APK copied successfully to build-outputs/app-debug.apk!")
+        } else {
+            println("WARNING: Source APK not found at: ${srcFile.absolutePath}")
+        }
+    }
+}
+
